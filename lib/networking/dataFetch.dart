@@ -37,7 +37,7 @@ class DataFetch {
     if(res.statusCode == 200) {
       var decodedJson = json.decode(res.body);
 
-      return decodedJson['results'];
+      return decodedJson['cast'];
     }
   }
 
