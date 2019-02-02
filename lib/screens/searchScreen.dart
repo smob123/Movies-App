@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../networking/dataFetch.dart';
 import '../screens/movieDetails.dart';
-import '../widgets/loadingWidget.dart';
+import '../widgets/general_widgets/loadingWidget.dart';
 
 class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
@@ -73,6 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
       String posterPath = searchedMovieList[i]['poster_path'];
       String imgUrl = '$posterBaseUrl$posterPath';
       String rating = searchedMovieList[i]['vote_average'].toString();
+      List genreIds = searchedMovieList[i]['genre_ids'];
 
       List<String> data = new List<String>();
 
@@ -81,12 +82,12 @@ class _SearchScreenState extends State<SearchScreen> {
       if (!data.contains(null)) {
         Map movieData = {
           'movieId': movieId,
-          'item index': i,
           'title': title,
           'poster': imgUrl,
-          'still shot': background,
+          'background url': background,
           'description': desc,
-          'rating': rating
+          'rating': rating,
+          'genre ids': genreIds
         };
 
         _addMovie(movieData, i + _posterList.length);

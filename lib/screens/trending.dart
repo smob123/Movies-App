@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../networking/dataFetch.dart';
-import '../widgets/loadingWidget.dart';
-import '../widgets/movieItem.dart';
+import '../widgets/general_widgets/loadingWidget.dart';
+import '../widgets/trending_screen_widgets/movieItem.dart';
 
 class TrendingMovies extends StatefulWidget {
   _TrendingMoviesState createState() => _TrendingMoviesState();
@@ -32,6 +32,7 @@ class _TrendingMoviesState extends State<TrendingMovies> {
       String posterPath = movieDataList[i]['poster_path'];
       String imgUrl = '$posterBaseUrl$posterPath';
       String rating = movieDataList[i]['vote_average'].toString();
+      List genreIds = movieDataList[i]['genre_ids'];
 
       List<String> data = new List<String>();
 
@@ -40,12 +41,12 @@ class _TrendingMoviesState extends State<TrendingMovies> {
       if (!data.contains(null)) {
         Map _currentMovieData = {
           'movieId': movieId,
-          'item index': i,
           'title': title,
           'poster': imgUrl,
-          'still shot': background,
+          'background url': background,
           'description': desc,
-          'rating': rating
+          'rating': rating,
+          'genre ids': genreIds
         };
 
         _movieList.add(MovieItem(movieData: _currentMovieData));

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/movieDetails.dart';
+import '../../screens/movieDetails.dart';
 
 class MovieItem extends StatelessWidget {
   MovieItem({this.movieData});
@@ -9,8 +9,6 @@ class MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int index = movieData['item index'];
-
     return GestureDetector(
         onTap: () {
           Navigator.push(
@@ -24,7 +22,7 @@ class MovieItem extends StatelessWidget {
             height: 350.0,
             decoration: BoxDecoration(
                 image: DecorationImage(
-              image: NetworkImage(movieData['still shot']),
+              image: NetworkImage(movieData['background url']),
               //card background image
               fit: BoxFit.fill,
             )),
@@ -40,7 +38,7 @@ class MovieItem extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     width: MediaQuery.of(context).size.width / 2,
                     child: Hero(
-                        tag: 'dash $index',
+                        tag: 'dash ${movieData['movieId']}',
                         child: Image.network(movieData['poster'], width: 150.0,)),
                   ),
                   Container(
@@ -54,6 +52,7 @@ class MovieItem extends StatelessWidget {
                         Text(
                           movieData['title'],
                           style: TextStyle(
+                              fontFamily: 'Yantramanav',
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
                               color: Colors.white,
@@ -65,6 +64,7 @@ class MovieItem extends StatelessWidget {
                           child: Text(
                             movieData['rating'] + ' / 10',
                             style: TextStyle(
+                              fontFamily: 'Yantramanav',
                               fontSize: 15.0,
                               color: Colors.white,
                               letterSpacing: 1.0,

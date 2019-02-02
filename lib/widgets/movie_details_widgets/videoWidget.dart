@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 
-import '../config/config.dart';
-import '../networking/dataFetch.dart';
+import '../../config/config.dart';
+import '../../networking/dataFetch.dart';
 
 class VideoWidget extends StatefulWidget {
   VideoWidget({this.videoId});
@@ -53,14 +53,15 @@ class VideoWidgetState extends State<VideoWidget> {
       GestureDetector(
         onTap: () => _playVideo(),
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery.of(context).size.width / 1.1,
+          margin: EdgeInsets.only(right: 5.0, left: 10.0),
           height: 200.0,
           color: Colors.black,
           child: _thumbnail,
         ),
       ),
       Positioned(
-        left: MediaQuery.of(context).size.width / 2.3,
+        left: MediaQuery.of(context).size.width / 2.4,
         child: FloatingActionButton(
           onPressed: null,
           backgroundColor: Colors.black26,
