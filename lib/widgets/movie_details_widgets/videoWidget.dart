@@ -27,7 +27,9 @@ class VideoWidgetState extends State<VideoWidget> {
 
   Future _getVideoUrl() async {
     _youtubeVideoId = await DataFetch().getMovieTrailer(videoId);
-    _getThumbnail();
+    if (_youtubeVideoId != null) {
+      _getThumbnail();
+    }
   }
 
   _getThumbnail() {
@@ -49,25 +51,27 @@ class VideoWidgetState extends State<VideoWidget> {
 
   @override
   build(BuildContext context) {
-    return Stack(alignment: Alignment.center, children: [
-      GestureDetector(
-        onTap: () => _playVideo(),
-        child: Container(
-          width: MediaQuery.of(context).size.width / 1.1,
-          margin: EdgeInsets.only(right: 5.0, left: 10.0),
-          height: 200.0,
-          color: Colors.black,
-          child: _thumbnail,
-        ),
-      ),
-      Positioned(
-        left: MediaQuery.of(context).size.width / 2.4,
-        child: FloatingActionButton(
-          onPressed: null,
-          backgroundColor: Colors.black26,
-          child: Icon(Icons.play_arrow),
-        ),
-      )
-    ]);
+    return _youtubeVideoId == null
+        ? Container()
+        : Stack(alignment: Alignment.center, children: [
+            GestureDetector(
+              onTap: () => _playVideo(),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.1,
+                margin: EdgeInsets.only(right: 5.0, left: 10.0),
+                height: 200.0,
+                color: Colors.black,
+                child: _thumbnail,
+              ),
+            ),
+            Positioned(
+              left: MediaQuery.of(context).size.width / 2.4,
+              child: FloatingActionButton(
+                onPressed: null,
+                backgroundColor: Colors.black26,
+                child: Icon(Icons.play_arrow),
+              ),
+            )
+          ]);
   }
 }

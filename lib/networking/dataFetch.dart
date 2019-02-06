@@ -22,9 +22,10 @@ class DataFetch {
     var dateTime = DateTime.now();
     String todaysDate = dateTime.toString().substring(0, 10);
 
-    var res = await http.get('https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&primary_release_date.gte=$todaysDate');
+    var res = await http.get(
+        'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&primary_release_date.gte=$todaysDate');
 
-    if(res.statusCode == 200) {
+    if (res.statusCode == 200) {
       var decodedJson = json.decode(res.body);
 
       return decodedJson['results'];
@@ -34,23 +35,22 @@ class DataFetch {
   Future getLatestMovies() async {
     var dateTime = DateTime.now();
     String todaysDate = dateTime.toString().substring(0, 10);
-    String lastMonthsDate = dateTime.subtract(Duration(days: 31)).toString().substring(0, 10);
+    String lastMonthsDate =
+        dateTime.subtract(Duration(days: 31)).toString().substring(0, 10);
 
-    var res = await http.get('https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&primary_release_date.lte=$todaysDate&primary_release_date.gte=$lastMonthsDate');
+    var res = await http.get(
+        'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&primary_release_date.lte=$todaysDate&primary_release_date.gte=$lastMonthsDate');
 
-    if(res.statusCode == 200) {
+    if (res.statusCode == 200) {
       var decodedJson = json.decode(res.body);
 
       return decodedJson['results'];
     }
   }
 
-  Future fetchMovieDetails(String movieTitle) async {
-    String detailsApiKey = apiData['movie details api key'];
-    String modifiedTitle = movieTitle.replaceAll(' ', '-');
-
+  Future fetchMovieDetails(String movieId) async {
     var res = await http
-        .get('http://www.omdbapi.com/?apikey=$detailsApiKey&t=$modifiedTitle');
+        .get('http://api.themoviedb.org/3/movie/$movieId?api_key=$_apiKey');
 
     if (res.statusCode == 200) {
       var decodedJson = json.decode(res.body);
@@ -59,9 +59,10 @@ class DataFetch {
   }
 
   Future getMoviesCast(String movieId) async {
-    var res = await http.get('http://api.themoviedb.org/3/movie/$movieId/casts?api_key=$_apiKey');
+    var res = await http.get(
+        'http://api.themoviedb.org/3/movie/$movieId/casts?api_key=$_apiKey');
 
-    if(res.statusCode == 200) {
+    if (res.statusCode == 200) {
       var decodedJson = json.decode(res.body);
 
       return decodedJson['cast'];
@@ -84,9 +85,11 @@ class DataFetch {
 
     if (res.statusCode == 200) {
       var decodedJson = json.decode(res.body);
-      var videoId = decodedJson['results'][0]['key'];
 
-      return videoId;
+      if (decodedJson['results'].length > 0) {
+        var videoId = decodedJson['results'][0]['key'];
+        return videoId;
+      }
     }
   }
 
@@ -104,9 +107,10 @@ class DataFetch {
   }
 
   Future getMoviesByGenre(String genreId) async {
-    var res = await http.get('https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&with_genres=$genreId&sort_by=popularity.desc&page=1');
+    var res = await http.get(
+        'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&with_genres=$genreId&sort_by=popularity.desc&page=1');
 
-    if(res.statusCode == 200) {
+    if (res.statusCode == 200) {
       var decodedJson = json.decode(res.body);
 
       return decodedJson['results'];

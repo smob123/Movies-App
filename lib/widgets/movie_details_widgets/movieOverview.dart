@@ -17,7 +17,7 @@ class MovieOverviewState extends State<MovieOverview> {
   MovieOverviewState({this.movieData});
 
   Map movieData;
-  String genre = '', rated = '', releaseDate = '';
+  String releaseDate = '', runTime = '';
   bool _loading = true;
 
   @override
@@ -27,10 +27,11 @@ class MovieOverviewState extends State<MovieOverview> {
   }
 
   Future _fetchMovieDetails() async {
-    var decodedJson = await DataFetch().fetchMovieDetails(movieData['title']);
-    genre = decodedJson['Genre'];
-    rated = decodedJson['Rated'];
-    releaseDate = decodedJson['Released'];
+    var decodedJson = await DataFetch().fetchMovieDetails(movieData['movieId']);
+    releaseDate = decodedJson['release_date'];
+    runTime = '${decodedJson['runtime'].toString()}';
+
+    runTime != 'null' ? runTime += ' minutes' : runTime = 'N/A';
 
     setState(() {
       _loading = false;
@@ -75,12 +76,12 @@ class MovieOverviewState extends State<MovieOverview> {
                         left: 10.0, top: 5.0, right: 5.0, bottom: 5.0),
                     child: Row(children: [
                       Icon(
-                        Icons.child_care,
+                        Icons.access_time,
                         color: Colors.white70,
                         size: 25.0,
                       ),
                       Text(
-                        ' $rated',
+                        ' $runTime',
                         style: TextStyle(
                           fontSize: 18.0,
                         ),
