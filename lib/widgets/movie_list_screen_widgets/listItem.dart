@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../screens/movieDetails.dart';
 
-class MovieItem extends StatelessWidget {
-  MovieItem({this.movieData});
+class ListItem extends StatelessWidget {
+  ListItem({this.movieData});
 
   final Map movieData;
 
@@ -38,8 +38,11 @@ class MovieItem extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     width: MediaQuery.of(context).size.width / 2,
                     child: Hero(
-                        tag: 'dash ${movieData['movieId']}',
-                        child: Image.network(movieData['poster'], width: 150.0,)),
+                        tag: '${movieData['hero tag']}',
+                        child: Image.network(
+                          movieData['poster'],
+                          width: 150.0,
+                        )),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -51,24 +54,14 @@ class MovieItem extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           movieData['title'],
-                          style: TextStyle(
-                              fontFamily: 'Yantramanav',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                              color: Colors.white,
-                              letterSpacing: 1.0),
+                          style: Theme.of(context).textTheme.headline,
                           textAlign: TextAlign.center,
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 5.0),
                           child: Text(
                             movieData['rating'] + ' / 10',
-                            style: TextStyle(
-                              fontFamily: 'Yantramanav',
-                              fontSize: 15.0,
-                              color: Colors.white,
-                              letterSpacing: 1.0,
-                            ),
+                            style: Theme.of(context).textTheme.title,
                           ),
                         )
                       ],

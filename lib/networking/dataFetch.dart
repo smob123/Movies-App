@@ -18,6 +18,33 @@ class DataFetch {
     }
   }
 
+  Future getUpcomingMovies() async {
+    var dateTime = DateTime.now();
+    String todaysDate = dateTime.toString().substring(0, 10);
+
+    var res = await http.get('https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&primary_release_date.gte=$todaysDate');
+
+    if(res.statusCode == 200) {
+      var decodedJson = json.decode(res.body);
+
+      return decodedJson['results'];
+    }
+  }
+
+  Future getLatestMovies() async {
+    var dateTime = DateTime.now();
+    String todaysDate = dateTime.toString().substring(0, 10);
+    String lastMonthsDate = dateTime.subtract(Duration(days: 31)).toString().substring(0, 10);
+
+    var res = await http.get('https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&primary_release_date.lte=$todaysDate&primary_release_date.gte=$lastMonthsDate');
+
+    if(res.statusCode == 200) {
+      var decodedJson = json.decode(res.body);
+
+      return decodedJson['results'];
+    }
+  }
+
   Future fetchMovieDetails(String movieTitle) async {
     String detailsApiKey = apiData['movie details api key'];
     String modifiedTitle = movieTitle.replaceAll(' ', '-');

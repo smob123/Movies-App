@@ -65,7 +65,6 @@ class HeaderState extends State<Header> {
             currentGenre,
             style: TextStyle(
               color: Colors.white,
-              fontFamily: 'Yantramanav',
               fontSize: 15.0,
             ),
           )));
@@ -103,8 +102,6 @@ class HeaderState extends State<Header> {
                             title,
                             style: TextStyle(
                                 fontSize: 30.0,
-                                fontFamily: 'Yantramanav',
-                                letterSpacing: 0.5,
                                 color: Colors.white),
                           )),
                       constraints: BoxConstraints(

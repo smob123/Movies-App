@@ -47,7 +47,7 @@ class CastWidgetState extends State<CastWidget> {
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
               castData[i]['name'],
-              style: TextStyle(letterSpacing: 0.5, color: Colors.white54),
+              style: TextStyle(color: Colors.white54),
             ))])));
     }
 
@@ -66,7 +66,7 @@ class CastWidgetState extends State<CastWidget> {
             children: [
               Text(
                 'Cast',
-                style: TextStyle(fontSize: 25.0, color: Colors.white70),
+                style: Theme.of(context).textTheme.headline,
               ),
               Container(
                   alignment: Alignment.topLeft,

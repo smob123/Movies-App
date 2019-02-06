@@ -63,10 +63,7 @@ class MovieScreenshotsWidgetState extends State<MovieScreenshotsWidget> {
                       padding: EdgeInsets.only(left: 5.0, bottom: 10.0),
                       child: Text(
                         'Screenshots',
-                        style: TextStyle(
-                            fontFamily: 'Yantramanav',
-                            fontSize: 25.0,
-                            color: Colors.white70),
+                        style: Theme.of(context).textTheme.headline,
                       )),
                   Container(
                       constraints: BoxConstraints(maxHeight: 200.0),

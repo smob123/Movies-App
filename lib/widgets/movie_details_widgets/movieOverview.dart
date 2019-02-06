@@ -48,7 +48,7 @@ class MovieOverviewState extends State<MovieOverview> {
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.topLeft,
               child: Hero(
-                  tag: 'dash ${movieData['movieId']}',
+                  tag: '${movieData['hero tag']}',
                   child: Image.network(movieData['poster']))),
           Container(
             width: MediaQuery.of(context).size.width / 1.5,
@@ -66,9 +66,8 @@ class MovieOverviewState extends State<MovieOverview> {
                         ),
                         Text(' ${movieData['rating']} / 10',
                             style: TextStyle(
-                                fontFamily: 'Yantramanav',
-                                fontSize: 18.0,
-                                color: Colors.white70)),
+                              fontSize: 18.0,
+                            )),
                       ],
                     )),
                 Padding(
@@ -83,10 +82,8 @@ class MovieOverviewState extends State<MovieOverview> {
                       Text(
                         ' $rated',
                         style: TextStyle(
-                            fontFamily: 'Yantramanav',
-                            letterSpacing: 0.5,
-                            fontSize: 18.0,
-                            color: Colors.white70),
+                          fontSize: 18.0,
+                        ),
                       )
                     ])),
                 Padding(
@@ -100,12 +97,6 @@ class MovieOverviewState extends State<MovieOverview> {
                       ),
                       Text(
                         ' $releaseDate',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1.0,
-                            fontSize: 18.0,
-                            color: Colors.white70),
                       )
                     ]))
               ],
@@ -130,7 +121,7 @@ class MovieOverviewState extends State<MovieOverview> {
               alignment: Alignment.topLeft,
               child: Text(
                 'Story',
-                style: TextStyle(fontSize: 25.0, color: Colors.white70),
+                style: Theme.of(context).textTheme.headline,
               ),
             ),
       Container(
@@ -138,11 +129,7 @@ class MovieOverviewState extends State<MovieOverview> {
         padding: EdgeInsets.all(10.0),
         child: Text(
           movieData['description'],
-          style: TextStyle(
-              fontFamily: 'Yantramanav',
-              letterSpacing: 0.5,
-              fontSize: 18.0,
-              color: Colors.white54),
+          style: TextStyle(color: Colors.white54),
         ),
       ),
     ]);
