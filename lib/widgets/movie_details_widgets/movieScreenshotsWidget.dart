@@ -10,13 +10,10 @@ class MovieScreenshotsWidget extends StatefulWidget {
   final String movieId;
 
   MovieScreenshotsWidgetState createState() =>
-      MovieScreenshotsWidgetState(movieId: movieId);
+      MovieScreenshotsWidgetState();
 }
 
 class MovieScreenshotsWidgetState extends State<MovieScreenshotsWidget> {
-  MovieScreenshotsWidgetState({this.movieId});
-
-  final String movieId;
   List<Widget> _mediaList = new List<Widget>();
   bool _loading = true;
 
@@ -28,10 +25,10 @@ class MovieScreenshotsWidgetState extends State<MovieScreenshotsWidget> {
 
   Future getScreenShots() async {
     _mediaList.add(VideoWidget(
-      videoId: movieId,
+      videoId: widget.movieId,
     ));
 
-    var imgScreenshotsUrls = await DataFetch().getMovieScreenshots(movieId);
+    var imgScreenshotsUrls = await DataFetch().getMovieScreenshots(widget.movieId);
     final String baseUrl = 'https://image.tmdb.org/t/p/w500';
 
     for (int i = 0; i < imgScreenshotsUrls.length; i++) {

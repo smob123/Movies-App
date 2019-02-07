@@ -7,13 +7,10 @@ class CastWidget extends StatefulWidget {
 
   final String movieId;
 
-  CastWidgetState createState() => CastWidgetState(movieId: movieId);
+  CastWidgetState createState() => CastWidgetState();
 }
 
 class CastWidgetState extends State<CastWidget> {
-  CastWidgetState({this.movieId});
-
-  final String movieId;
   List<Widget> _castList = new List<Widget>();
 
   @override
@@ -23,7 +20,7 @@ class CastWidgetState extends State<CastWidget> {
   }
 
   Future _getMovieCast() async {
-    List castData = await DataFetch().getMoviesCast(movieId);
+    List castData = await DataFetch().getMoviesCast(widget.movieId);
     List<Widget> c = new List<Widget>();
 
     for (int i = 0; i < castData.length; i++) {

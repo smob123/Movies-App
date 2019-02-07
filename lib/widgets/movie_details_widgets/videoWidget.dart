@@ -9,13 +9,10 @@ class VideoWidget extends StatefulWidget {
 
   final String videoId;
 
-  VideoWidgetState createState() => VideoWidgetState(videoId: videoId);
+  VideoWidgetState createState() => VideoWidgetState();
 }
 
 class VideoWidgetState extends State<VideoWidget> {
-  VideoWidgetState({this.videoId});
-
-  final String videoId;
   String _youtubeVideoId;
   Image _thumbnail;
 
@@ -26,7 +23,7 @@ class VideoWidgetState extends State<VideoWidget> {
   }
 
   Future _getVideoUrl() async {
-    _youtubeVideoId = await DataFetch().getMovieTrailer(videoId);
+    _youtubeVideoId = await DataFetch().getMovieTrailer(widget.videoId);
     if (_youtubeVideoId != null) {
       _getThumbnail();
     }

@@ -7,15 +7,11 @@ class Header extends StatefulWidget {
   final String backgroundUrl;
   final List genres;
 
-  HeaderState createState() =>
-      HeaderState(title: title, backgroundUrl: backgroundUrl, genres: genres);
+  HeaderState createState() => HeaderState();
 }
 
 class HeaderState extends State<Header> {
-  final String title;
-  final List genres;
   List<Widget> _genreWidgets = new List<Widget>();
-  final String backgroundUrl;
   final Map _allMovieGenres = {
     "28": "Action",
     "12": "Adventure",
@@ -38,8 +34,6 @@ class HeaderState extends State<Header> {
     "37": "Western"
   };
 
-  HeaderState({this.title, this.genres, this.backgroundUrl});
-
   @override
   initState() {
     super.initState();
@@ -49,8 +43,8 @@ class HeaderState extends State<Header> {
   _getMovieGenres() {
     List<Widget> genreItems = new List<Widget>();
 
-    for (int i = 0; i < genres.length; i++) {
-      String currentGenre = _allMovieGenres[genres[i].toString()];
+    for (int i = 0; i < widget.genres.length; i++) {
+      String currentGenre = _allMovieGenres[widget.genres[i].toString()];
 
       genreItems.add(Container(
           margin:
@@ -82,7 +76,7 @@ class HeaderState extends State<Header> {
       height: MediaQuery.of(context).size.height / 2,
       decoration: BoxDecoration(
           image: DecorationImage(
-        image: NetworkImage(backgroundUrl),
+        image: NetworkImage(widget.backgroundUrl),
         fit: BoxFit.fill,
       )),
       child: Container(
@@ -99,7 +93,7 @@ class HeaderState extends State<Header> {
                       child: Padding(
                           padding: EdgeInsets.only(left: 5.0, right: 5.0),
                           child: Text(
-                            title,
+                            widget.title,
                             style: TextStyle(
                                 fontSize: 30.0,
                                 color: Colors.white),

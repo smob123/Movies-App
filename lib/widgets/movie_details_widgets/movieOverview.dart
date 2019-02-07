@@ -8,16 +8,11 @@ class MovieOverview extends StatefulWidget {
 
   final Map movieData;
 
-  MovieOverviewState createState() => MovieOverviewState(
-        movieData: movieData,
-      );
+  MovieOverviewState createState() => MovieOverviewState();
 }
 
 class MovieOverviewState extends State<MovieOverview> {
-  MovieOverviewState({this.movieData});
-
-  Map movieData;
-  String releaseDate = '', runTime = '';
+  String _releaseDate = '', _runTime = '';
   bool _loading = true;
 
   @override
@@ -27,11 +22,11 @@ class MovieOverviewState extends State<MovieOverview> {
   }
 
   Future _fetchMovieDetails() async {
-    var decodedJson = await DataFetch().fetchMovieDetails(movieData['movieId']);
-    releaseDate = decodedJson['release_date'];
-    runTime = '${decodedJson['runtime'].toString()}';
+    var decodedJson = await DataFetch().fetchMovieDetails(widget.movieData['movieId']);
+    _releaseDate = decodedJson['release_date'];
+    _runTime = '${decodedJson['runtime'].toString()}';
 
-    runTime != 'null' ? runTime += ' minutes' : runTime = 'N/A';
+    _runTime != 'null' ? _runTime += ' minutes' : _runTime = 'N/A';
 
     setState(() {
       _loading = false;
@@ -49,8 +44,8 @@ class MovieOverviewState extends State<MovieOverview> {
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.topLeft,
               child: Hero(
-                  tag: '${movieData['hero tag']}',
-                  child: Image.network(movieData['poster']))),
+                  tag: '${widget.movieData['hero tag']}',
+                  child: Image.network(widget.movieData['poster']))),
           Container(
             width: MediaQuery.of(context).size.width / 1.5,
             child: Column(
@@ -65,7 +60,7 @@ class MovieOverviewState extends State<MovieOverview> {
                           color: Colors.white70,
                           size: 25.0,
                         ),
-                        Text(' ${movieData['rating']} / 10',
+                        Text(' ${widget.movieData['rating']} / 10',
                             style: TextStyle(
                               fontSize: 18.0,
                             )),
@@ -81,7 +76,7 @@ class MovieOverviewState extends State<MovieOverview> {
                         size: 25.0,
                       ),
                       Text(
-                        ' $runTime',
+                        ' $_runTime',
                         style: TextStyle(
                           fontSize: 18.0,
                         ),
@@ -97,7 +92,7 @@ class MovieOverviewState extends State<MovieOverview> {
                         size: 25.0,
                       ),
                       Text(
-                        ' $releaseDate',
+                        ' $_releaseDate',
                       )
                     ]))
               ],
@@ -129,7 +124,7 @@ class MovieOverviewState extends State<MovieOverview> {
         alignment: Alignment.topLeft,
         padding: EdgeInsets.all(10.0),
         child: Text(
-          movieData['description'],
+          widget.movieData['description'],
           style: TextStyle(color: Colors.white54),
         ),
       ),

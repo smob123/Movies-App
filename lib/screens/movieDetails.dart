@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/movie_details_widgets/movieOverview.dart';
 import '../widgets/movie_details_widgets/header.dart';
 import '../widgets/movie_details_widgets/movieCastWidget.dart';
+import '../widgets/movie_details_widgets/movieOverview.dart';
 import '../widgets/movie_details_widgets/movieScreenshotsWidget.dart';
 
 class MovieDetails extends StatefulWidget {
@@ -10,31 +10,26 @@ class MovieDetails extends StatefulWidget {
 
   final Map movieData;
 
-  MovieDetailsState createState() => MovieDetailsState(movieData: movieData);
+  MovieDetailsState createState() => MovieDetailsState();
 }
 
 class MovieDetailsState extends State<MovieDetails> {
-  MovieDetailsState({this.movieData});
-
-  final Map movieData;
-
   @override
   build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 29, 29, 39),
         body: ListView(
             scrollDirection: Axis.vertical,
             padding: EdgeInsets.all(0.0),
             children: [
               Column(children: [
                 Header(
-                  title: movieData['title'],
-                  genres: movieData['genre ids'],
-                  backgroundUrl: movieData['background url'],
+                  title: widget.movieData['title'],
+                  genres: widget.movieData['genre ids'],
+                  backgroundUrl: widget.movieData['background url'],
                 ),
                 Container(
                   child: MovieOverview(
-                    movieData: movieData,
+                    movieData: widget.movieData,
                   ),
                 ),
                 Padding(
@@ -46,7 +41,7 @@ class MovieDetailsState extends State<MovieDetails> {
                       color: Colors.white70,
                     )),
                 MovieScreenshotsWidget(
-                  movieId: movieData['movieId'],
+                  movieId: widget.movieData['movieId'],
                 ),
                 Padding(
                     padding: EdgeInsets.only(
@@ -57,7 +52,7 @@ class MovieDetailsState extends State<MovieDetails> {
                       color: Colors.white70,
                     )),
                 CastWidget(
-                  movieId: movieData['movieId'],
+                  movieId: widget.movieData['movieId'],
                 )
               ])
             ]));
