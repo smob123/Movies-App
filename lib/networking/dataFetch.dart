@@ -7,7 +7,7 @@ import '../config/config.dart';
 class DataFetch {
   final String _apiKey = apiData['api key'];
 
-  Future getTrendingMovies() async {
+  getTrendingMovies() async {
     var res = await http.get(
         'https://api.themoviedb.org/3/trending/movie/week?api_key=$_apiKey');
 
@@ -18,7 +18,7 @@ class DataFetch {
     }
   }
 
-  Future getUpcomingMovies() async {
+  getUpcomingMovies() async {
     var dateTime = DateTime.now();
     String todaysDate = dateTime.toString().substring(0, 10);
 
@@ -32,7 +32,7 @@ class DataFetch {
     }
   }
 
-  Future getLatestMovies() async {
+  getLatestMovies() async {
     var dateTime = DateTime.now();
     String todaysDate = dateTime.toString().substring(0, 10);
     String lastMonthsDate =
@@ -48,7 +48,7 @@ class DataFetch {
     }
   }
 
-  Future fetchMovieDetails(String movieId) async {
+  fetchMovieDetails(String movieId) async {
     var res = await http
         .get('http://api.themoviedb.org/3/movie/$movieId?api_key=$_apiKey');
 
@@ -58,7 +58,7 @@ class DataFetch {
     }
   }
 
-  Future getMoviesCast(String movieId) async {
+  getMoviesCast(String movieId) async {
     var res = await http.get(
         'http://api.themoviedb.org/3/movie/$movieId/casts?api_key=$_apiKey');
 
@@ -69,7 +69,7 @@ class DataFetch {
     }
   }
 
-  Future getMovieScreenshots(String movieId) async {
+  getMovieScreenshots(String movieId) async {
     var res = await http.get(
         'http://api.themoviedb.org/3/movie/$movieId/images?api_key=$_apiKey');
 
@@ -79,7 +79,7 @@ class DataFetch {
     }
   }
 
-  Future getMovieTrailer(movieId) async {
+  getMovieTrailer(movieId) async {
     var res = await http.get(
         'http://api.themoviedb.org/3/movie/$movieId/videos?api_key=$_apiKey');
 
@@ -93,7 +93,7 @@ class DataFetch {
     }
   }
 
-  Future searchForMovies(String term, int pageNum) async {
+  searchForMovies(String term, int pageNum) async {
     var res = await http.get(
         'https://api.themoviedb.org/3/search/movie?api_key=$_apiKey&query=$term&page=$pageNum');
 
@@ -106,7 +106,7 @@ class DataFetch {
     }
   }
 
-  Future getMoviesByGenre(String genreId) async {
+  getMoviesByGenre(String genreId) async {
     var res = await http.get(
         'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&with_genres=$genreId&sort_by=popularity.desc&page=1');
 

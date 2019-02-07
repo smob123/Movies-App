@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../networking/dataFetch.dart';
+import '../widgets/home_screen_widgets/genreWidget.dart';
 import '../widgets/home_screen_widgets/header.dart';
 import '../widgets/home_screen_widgets/movieCategoryListWidget.dart';
 
@@ -13,7 +14,6 @@ class HomeScreenState extends State<HomeScreen> {
   build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.only(top: 25.0),
       child: ListView(
         children: <Widget>[
           Header(),
@@ -29,6 +29,7 @@ class HomeScreenState extends State<HomeScreen> {
             category: 'Upcoming Movies',
             moviesList: DataFetch().getUpcomingMovies(),
           ),
+          GenreWidget()
         ],
       ),
     ));

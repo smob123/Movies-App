@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../config/movieGenreIds.dart';
+
 class Header extends StatefulWidget {
   Header({this.title, this.backgroundUrl, this.genres});
 
@@ -12,27 +14,7 @@ class Header extends StatefulWidget {
 
 class HeaderState extends State<Header> {
   List<Widget> _genreWidgets = new List<Widget>();
-  final Map _allMovieGenres = {
-    "28": "Action",
-    "12": "Adventure",
-    "16": "Animation",
-    "35": "Comedy",
-    "80": "Crime",
-    "99": "Documentary",
-    "18": "Drama",
-    "10751": "Family",
-    "14": "Fantasy",
-    "36": "History",
-    "27": "Horror",
-    "10402": "Music",
-    "9648": "Mystery",
-    "10749": "Romance",
-    "878": "Science Fiction",
-    "10770": "TV Movie",
-    "53": "Thriller",
-    "10752": "War",
-    "37": "Western"
-  };
+  final Map _allMovieGenres = MovieGenreIds().getGenres();
 
   @override
   initState() {
@@ -94,9 +76,8 @@ class HeaderState extends State<Header> {
                           padding: EdgeInsets.only(left: 5.0, right: 5.0),
                           child: Text(
                             widget.title,
-                            style: TextStyle(
-                                fontSize: 30.0,
-                                color: Colors.white),
+                            style:
+                                TextStyle(fontSize: 30.0, color: Colors.white),
                           )),
                       constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width / 1.3),
@@ -105,8 +86,11 @@ class HeaderState extends State<Header> {
                 ),
                 ConstrainedBox(
                     constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width, maxHeight: 50.0),
-                    child: ListView(scrollDirection: Axis.horizontal, children: _genreWidgets)),
+                        maxWidth: MediaQuery.of(context).size.width,
+                        maxHeight: 50.0),
+                    child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: _genreWidgets)),
               ])),
     );
   }

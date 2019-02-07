@@ -60,8 +60,9 @@ class _SearchScreenState extends State<SearchScreen> {
     List searchedMovieList =
         await DataFetch().searchForMovies(term, apiPageNumber);
 
-    if (searchedMovieList == null || searchedMovieList.length < 1) {
-      print(searchedMovieList);
+    if (searchedMovieList.length < 1) {
+      _posterList.add(Text('No movies found'));
+      _searchResultsWidget = _posterList[0];
       setState(() {
         _loading = false;
       });

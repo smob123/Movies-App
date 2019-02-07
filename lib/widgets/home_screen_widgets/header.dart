@@ -55,80 +55,82 @@ class HeaderState extends State<Header> {
 
   @override
   build(BuildContext context) {
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(left: 5.0),
-            child: Icon(
-              Icons.bookmark,
-              color: Colors.white70,
-              size: 30.0,
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width / 1.6,
-            child: TextField(
-              style: Theme.of(context).textTheme.title,
-              decoration: InputDecoration(
-                hintStyle: TextStyle(color: Colors.white54),
-                hintText: 'Search Movies...',
-                contentPadding: EdgeInsets.all(10.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+    return Container(
+        margin: EdgeInsets.only(top: 25.0),
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(left: 5.0),
+                child: Icon(
+                  Icons.bookmark,
+                  color: Colors.white70,
+                  size: 30.0,
                 ),
               ),
-              onSubmitted: ((e) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SearchScreen(
-                              searchTerm: e,
-                            )));
-              }),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 5.0),
-            child: Icon(
-              Icons.settings,
-              color: Colors.white70,
-              size: 30.0,
-            ),
-          )
-        ],
-      ),
-      _loading
-          ? Container()
-          : GestureDetector(
-              onTap: (() {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MovieDetails(
-                              movieData: _movieData,
-                            )));
-              }),
-              child: Container(
-                  margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height / 4),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 3,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(_movieData['background url']),
-                          fit: BoxFit.fill)),
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.all(10.0),
-                    color: Colors.black54,
-                    child: Text(
-                      _movieData['title'],
-                      style: TextStyle(fontSize: 25.0),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.6,
+                child: TextField(
+                  style: Theme.of(context).textTheme.title,
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white54),
+                    hintText: 'Search Movies...',
+                    contentPadding: EdgeInsets.all(10.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
                     ),
-                  )))
-    ]);
+                  ),
+                  onSubmitted: ((e) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchScreen(
+                                  searchTerm: e,
+                                )));
+                  }),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 5.0),
+                child: Icon(
+                  Icons.settings,
+                  color: Colors.white70,
+                  size: 30.0,
+                ),
+              )
+            ],
+          ),
+          _loading
+              ? Container()
+              : GestureDetector(
+                  onTap: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MovieDetails(
+                                  movieData: _movieData,
+                                )));
+                  }),
+                  child: Container(
+                      margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height / 4),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 3,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(_movieData['background url']),
+                              fit: BoxFit.fill)),
+                      child: Container(
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.all(10.0),
+                        color: Colors.black54,
+                        child: Text(
+                          _movieData['title'],
+                          style: TextStyle(fontSize: 25.0),
+                        ),
+                      )))
+        ]));
   }
 }
