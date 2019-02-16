@@ -53,7 +53,15 @@ class MovieCategoryListState extends State<MovieCategoryList> {
         'genre ids': genreIds
       };
 
-      if (!currentMovieData.containsValue(null)) {
+      bool dataIsValid = true;
+
+      currentMovieData.forEach((key, value) {
+        if(value.toString().contains('null')) {
+          dataIsValid = false;
+        }
+      });
+
+      if (dataIsValid) {
         _movieData.add(currentMovieData);
       }
     });

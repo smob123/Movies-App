@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../config/cacheHandler.dart';
 import '../../networking/dataFetch.dart';
 import '../../widgets/general_widgets/loadingWidget.dart';
 
@@ -14,15 +15,19 @@ class MovieOverview extends StatefulWidget {
 class MovieOverviewState extends State<MovieOverview> {
   String _releaseDate = '', _runTime = '';
   bool _loading = true;
+  bool _bookMarked = false;
+  final CacheHandler _cacheHandler = new CacheHandler();
 
   @override
   void initState() {
     super.initState();
+    _isBookmarked();
     _fetchMovieDetails();
   }
 
   Future _fetchMovieDetails() async {
-    var decodedJson = await DataFetch().fetchMovieDetails(widget.movieData['movieId']);
+    var decodedJson =
+        await DataFetch().fetchMovieDetails(widget.movieData['movieId']);
     _releaseDate = decodedJson['release_date'];
     _runTime = '${decodedJson['runtime'].toString()}';
 
@@ -33,9 +38,48 @@ class MovieOverviewState extends State<MovieOverview> {
     });
   }
 
+  _isBookmarked() async {
+    bool movieIsBookmarked = await _cacheHandler.getBookmark(widget.movieData);
+
+    if (movieIsBookmarked) {
+      setState(() {
+        _bookMarked = true;
+      });
+    }
+  }
+
+  _bookmarkIconState() {
+    IconData bookmarkIcon =
+        _bookMarked ? Icons.bookmark : Icons.bookmark_border;
+    return Icon(
+      bookmarkIcon,
+      color: Colors.white70,
+      size: 40.0,
+    );
+  }
+
+  _bookmarkCacheState() {
+    if (!_bookMarked) {
+      _cacheHandler.addBookmark(widget.movieData);
+    } else {
+      _cacheHandler.removeBookmark(widget.movieData);
+    }
+
+    setState(() {
+      _bookMarked = !_bookMarked;
+    });
+  }
+
   @override
   build(BuildContext context) {
     return Column(children: [
+      Container(
+          alignment: Alignment.centerRight,
+          margin: EdgeInsets.only(right: 10.0, top: 10.0),
+          child: GestureDetector(
+            child: _bookmarkIconState(),
+            onTap: () => _bookmarkCacheState(),
+          )),
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

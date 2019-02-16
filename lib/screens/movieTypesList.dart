@@ -64,9 +64,11 @@ class _MovieTypesListState extends State<MovieTypesList> {
         'genre ids': genreIds
       };
 
-      _movieList.add(ListItem(
-        movieData: movieData,
-      ));
+      if (!movieData.containsValue(null)) {
+        _movieList.add(ListItem(
+          movieData: movieData,
+        ));
+      }
     }
 
     setState(() {

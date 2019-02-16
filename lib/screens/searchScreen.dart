@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
   _initializeControllers() {
     _controller = new ScrollController()
       ..addListener(() {
-        if (_controller.offset == _controller.position.maxScrollExtent) {
+        if (_controller.offset == _controller.position.maxScrollExtent - 100.0) {
           apiPageNumber++;
           _searchForMovies(searchTerm);
         }
@@ -60,7 +60,9 @@ class _SearchScreenState extends State<SearchScreen> {
     List searchedMovieList =
         await DataFetch().searchForMovies(term, apiPageNumber);
 
-    if (searchedMovieList.length < 1) {
+    if (searchedMovieList == null) {
+      return;
+    } else if (searchedMovieList.length < 1) {
       _posterList.add(Text('No movies found'));
       _searchResultsWidget = _posterList[0];
       setState(() {
@@ -87,22 +89,18 @@ class _SearchScreenState extends State<SearchScreen> {
       String rating = searchedMovieList[i]['vote_average'].toString();
       List genreIds = searchedMovieList[i]['genre_ids'];
 
-      List<String> data = new List<String>();
+      Map movieData = {
+        'hero tag': heroTag,
+        'movieId': movieId,
+        'title': title,
+        'poster': imgUrl,
+        'background url': background,
+        'description': desc,
+        'rating': rating,
+        'genre ids': genreIds
+      };
 
-      data.addAll([movieId, backgroundPath, title, desc, posterPath, rating]);
-
-      if (!data.contains(null)) {
-        Map movieData = {
-          'hero tag': heroTag,
-          'movieId': movieId,
-          'title': title,
-          'poster': imgUrl,
-          'background url': background,
-          'description': desc,
-          'rating': rating,
-          'genre ids': genreIds
-        };
-
+      if (!movieData['poster'].toString().contains('null')) {
         _addMovie(movieData, i + _posterList.length);
       }
     }

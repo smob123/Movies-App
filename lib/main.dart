@@ -5,11 +5,7 @@ import './screens/homeScreen.dart';
 
 main() => runApp(new MyApp());
 
-class MyApp extends StatefulWidget {
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
