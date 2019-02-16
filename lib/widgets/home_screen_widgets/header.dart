@@ -6,6 +6,7 @@ import '../../networking/dataFetch.dart';
 import '../../screens/bookmarks.dart';
 import '../../screens/movieDetails.dart';
 import '../../screens/searchScreen.dart';
+import '../../screens/settings/settings.dart';
 
 class Header extends StatefulWidget {
   HeaderState createState() => HeaderState();
@@ -97,14 +98,19 @@ class HeaderState extends State<Header> {
                   }),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(right: 5.0),
-                child: Icon(
-                  Icons.settings,
-                  color: Colors.white70,
-                  size: 30.0,
-                ),
-              )
+              GestureDetector(
+                  onTap: (() {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Settings()));
+                  }),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 5.0),
+                    child: Icon(
+                      Icons.settings,
+                      color: Colors.white70,
+                      size: 30.0,
+                    ),
+                  ))
             ],
           ),
           _loading

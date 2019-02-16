@@ -31,7 +31,8 @@ class _SearchScreenState extends State<SearchScreen> {
   _initializeControllers() {
     _controller = new ScrollController()
       ..addListener(() {
-        if (_controller.offset == _controller.position.maxScrollExtent - 100.0) {
+        if (_controller.offset ==
+            _controller.position.maxScrollExtent - 100.0) {
           apiPageNumber++;
           _searchForMovies(searchTerm);
         }
@@ -149,39 +150,44 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text('Results for "$searchTerm"'),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
         body: SafeArea(
             child: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Container(
-              margin: EdgeInsets.only(bottom: 5.0, top: 10.0),
-              width: MediaQuery.of(context).size.width / 1.1,
-              height: MediaQuery.of(context).size.height / 15,
-              child: TextField(
-                controller: _textEditingController,
-                style: Theme.of(context).textTheme.title,
-                decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.white54),
-                  hintText: 'Search Movies...',
-                  contentPadding: EdgeInsets.all(10.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  ),
-                ),
-                onSubmitted: (val) => _newSearch(val),
-              )),
-          _loading
-              ? LoadingWidget(
-                  color: Colors.white70,
-                )
-              : ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height / 1.13,
-                      maxWidth: MediaQuery.of(context).size.width),
-                  child: Container(child: _searchResultsWidget),
-                )
-        ],
-      ),
-    )));
+          child: Column(
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(bottom: 5.0, top: 10.0),
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  height: MediaQuery.of(context).size.height / 15,
+                  child: TextField(
+                    controller: _textEditingController,
+                    style: Theme.of(context).textTheme.title,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(color: Colors.white54),
+                      hintText: 'Search Movies...',
+                      contentPadding: EdgeInsets.all(10.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      ),
+                    ),
+                    onSubmitted: (val) => _newSearch(val),
+                  )),
+              _loading
+                  ? LoadingWidget(
+                      color: Colors.white70,
+                    )
+                  : ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height / 1.13,
+                          maxWidth: MediaQuery.of(context).size.width),
+                      child: Container(child: _searchResultsWidget),
+                    )
+            ],
+          ),
+        )));
   }
 }

@@ -93,6 +93,7 @@ class MovieCategoryListState extends State<MovieCategoryList> {
                             MaterialPageRoute(
                                 builder: (context) => MovieTypesList(
                                       moviesList: _movieData,
+                                      movieTypes: widget.category,
                                     )));
                       }),
                       child: Text(

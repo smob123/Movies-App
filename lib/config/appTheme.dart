@@ -4,6 +4,7 @@ class AppTheme {
 
   ThemeData mainTheme() {
     return ThemeData(
+      primaryColor: Color.fromARGB(255, 29, 29, 39),
       primaryColorDark: Color.fromARGB(255, 29, 29, 39),
       primaryColorLight: Colors.white70,
       hintColor: Colors.white70,

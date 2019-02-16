@@ -23,8 +23,11 @@ class _BookmarksState extends State<Bookmarks> {
     _bookmarkedMovies = await _cacheHandler.getBookmarks();
 
     if (_bookmarkedMovies == null || _bookmarkedMovies.length == 0) {
-      _bookmarksContainer =
-          Center(child: Text('You have no book marked movie'));
+      _bookmarksContainer = Center(
+          child: Text(
+        'You have no bookmarked movie',
+        style: Theme.of(context).textTheme.title,
+      ));
 
       setState(() {
         _loading = false;
@@ -75,6 +78,10 @@ class _BookmarksState extends State<Bookmarks> {
   build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+            appBar: AppBar(
+                title: Text('Bookmarks'),
+                backgroundColor: Colors.transparent,
+                elevation: 0.0),
             body: _loading
                 ? Center(
                     child: LoadingWidget(

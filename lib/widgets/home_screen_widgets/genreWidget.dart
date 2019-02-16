@@ -29,6 +29,7 @@ class _GenreWidgetState extends State<GenreWidget> {
                 MaterialPageRoute(
                     builder: (context) => MovieTypesList(
                           fetchMoviesUrl: DataFetch().getMoviesByGenre(genreId),
+                          movieTypes: genreMap[genreId],
                         )));
           },
           child: (Container(

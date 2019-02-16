@@ -5,8 +5,9 @@ import '../widgets/general_widgets/loadingWidget.dart';
 import '../widgets/movie_list_screen_widgets/listItem.dart';
 
 class MovieTypesList extends StatefulWidget {
-  MovieTypesList({this.moviesList, this.fetchMoviesUrl});
+  MovieTypesList({this.movieTypes, this.moviesList, this.fetchMoviesUrl});
 
+  final String movieTypes;
   final List<Map> moviesList;
   var fetchMoviesUrl;
 
@@ -79,6 +80,11 @@ class _MovieTypesListState extends State<MovieTypesList> {
   @override
   build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text('${widget.movieTypes}'),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
         body: _loading
             ? LoadingWidget(
                 color: Colors.white,
