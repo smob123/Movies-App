@@ -53,10 +53,12 @@ class CacheHandler {
     return exists;
   }
 
-  getBookmarks() {
+  getBookmarks() async {
+    await _getCacheDir();
     String cacheData = _readCache();
     if (cacheData != null) {
-      var cacheJson = json.decode(cacheData);
+      String cacheJsonString = json.decode(cacheData);
+      var cacheJson = json.decode(cacheJsonString);
 
       return cacheJson['bookmarks'];
     }
@@ -66,7 +68,8 @@ class CacheHandler {
     String cacheJsonString = json.decode(_readCache());
     Map cacheJson = json.decode(cacheJsonString);
 
-    cacheJson['bookmarks'].removeWhere((movie) => movie['movieId'] == data['movieId']);
+    cacheJson['bookmarks']
+        .removeWhere((movie) => movie['movieId'] == data['movieId']);
 
     _writeCache(json.encode(cacheJson));
   }

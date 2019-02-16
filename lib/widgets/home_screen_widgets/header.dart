@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../networking/dataFetch.dart';
+import '../../screens/bookmarks.dart';
 import '../../screens/movieDetails.dart';
 import '../../screens/searchScreen.dart';
 
@@ -61,14 +62,19 @@ class HeaderState extends State<Header> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(left: 5.0),
-                child: Icon(
-                  Icons.bookmark,
-                  color: Colors.white70,
-                  size: 30.0,
-                ),
-              ),
+              GestureDetector(
+                  onTap: (() {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Bookmarks()));
+                  }),
+                  child: Container(
+                    margin: EdgeInsets.only(left: 5.0),
+                    child: Icon(
+                      Icons.bookmark,
+                      color: Colors.white70,
+                      size: 30.0,
+                    ),
+                  )),
               Container(
                 width: MediaQuery.of(context).size.width / 1.6,
                 child: TextField(
