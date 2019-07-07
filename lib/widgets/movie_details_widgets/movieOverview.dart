@@ -16,7 +16,7 @@ class MovieOverviewState extends State<MovieOverview> {
   String _releaseDate = '', _runTime = '';
   bool _loading = true;
   bool _bookMarked = false;
-  final CacheHandler _cacheHandler = new CacheHandler();
+  final CacheHandler _cacheHandler = new CacheHandler(); //stores the movie in the app's cache if it gets bookmarked
 
   @override
   void initState() {
@@ -25,12 +25,16 @@ class MovieOverviewState extends State<MovieOverview> {
     _fetchMovieDetails();
   }
 
+  //fetches information about the movie
   Future _fetchMovieDetails() async {
+    //grab the data from the api
     var decodedJson =
         await DataFetch().fetchMovieDetails(widget.movieData['movieId']);
+    //store it into the variables
     _releaseDate = decodedJson['release_date'];
     _runTime = '${decodedJson['runtime'].toString()}';
 
+    //check if the fetched data is not null
     _runTime != 'null' ? _runTime += ' minutes' : _runTime = 'N/A';
 
     setState(() {
@@ -38,7 +42,9 @@ class MovieOverviewState extends State<MovieOverview> {
     });
   }
 
+  //checks if the movie was bookmarked previously
   _isBookmarked() async {
+    //check if the movie exists in the cache directory
     bool movieIsBookmarked = await _cacheHandler.getBookmark(widget.movieData);
 
     if (movieIsBookmarked) {
@@ -48,6 +54,7 @@ class MovieOverviewState extends State<MovieOverview> {
     }
   }
 
+  //changes the bookmark icon based on whether the movie is bookmarked or not
   _bookmarkIconState() {
     IconData bookmarkIcon =
         _bookMarked ? Icons.bookmark : Icons.bookmark_border;
@@ -58,6 +65,7 @@ class MovieOverviewState extends State<MovieOverview> {
     );
   }
 
+  //handles adding, and removing the movie from the cache directory
   _bookmarkCacheState() {
     if (!_bookMarked) {
       _cacheHandler.addBookmark(widget.movieData);
@@ -73,28 +81,28 @@ class MovieOverviewState extends State<MovieOverview> {
   @override
   build(BuildContext context) {
     return Column(children: [
-      Container(
+      Container( //container for the bookmark icon
           alignment: Alignment.centerRight,
           margin: EdgeInsets.only(right: 10.0, top: 10.0),
-          child: GestureDetector(
+          child: GestureDetector( //makes the icon clickable
             child: _bookmarkIconState(),
             onTap: () => _bookmarkCacheState(),
           )),
-      Row(
+      Row( //row for the movie's general details
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          Container( //container for the movie's poster
               width: MediaQuery.of(context).size.width / 3,
               padding: EdgeInsets.all(10.0),
               alignment: Alignment.topLeft,
               child: Hero(
-                  tag: '${widget.movieData['hero tag']}',
+                  tag: '${widget.movieData['hero tag']}', //add the image's hero tag to run the hero animation
                   child: Image.network(widget.movieData['poster']))),
-          Container(
+          Container( //container for the movie's information
             width: MediaQuery.of(context).size.width / 1.5,
             child: Column(
               children: <Widget>[
-                Padding(
+                Padding( //contains the movie's rating
                     padding: EdgeInsets.only(
                         left: 10.0, top: 5.0, right: 5.0, bottom: 5.0),
                     child: Row(
@@ -110,7 +118,7 @@ class MovieOverviewState extends State<MovieOverview> {
                             )),
                       ],
                     )),
-                Padding(
+                Padding( //contains the movie's runtime
                     padding: EdgeInsets.only(
                         left: 10.0, top: 5.0, right: 5.0, bottom: 5.0),
                     child: Row(children: [
@@ -126,7 +134,7 @@ class MovieOverviewState extends State<MovieOverview> {
                         ),
                       )
                     ])),
-                Padding(
+                Padding( //contains the movie's release date
                     padding: EdgeInsets.only(
                         left: 10.0, top: 5.0, right: 5.0, bottom: 5.0),
                     child: Row(children: [
@@ -144,7 +152,7 @@ class MovieOverviewState extends State<MovieOverview> {
           ),
         ],
       ),
-      Padding(
+      Padding( //divider between sections
           padding:
               EdgeInsets.only(top: 20.0, bottom: 20.0, left: 50.0, right: 50.0),
           child: Divider(
@@ -152,11 +160,11 @@ class MovieOverviewState extends State<MovieOverview> {
             indent: 0.0,
             color: Colors.white70,
           )),
-      _loading
+      _loading //check if in loading state
           ? LoadingWidget(
               color: Colors.blue,
             )
-          : Container(
+          : Container( //movie's story section's header
               padding: EdgeInsets.all(5.0),
               alignment: Alignment.topLeft,
               child: Text(
@@ -164,7 +172,7 @@ class MovieOverviewState extends State<MovieOverview> {
                 style: Theme.of(context).textTheme.headline,
               ),
             ),
-      Container(
+      Container( //contains the description of the movie's story
         alignment: Alignment.topLeft,
         padding: EdgeInsets.all(10.0),
         child: Text(

@@ -1,3 +1,7 @@
+/*
+  stores the movies' genres, and their IDs based on the API's implementation
+ */
+
 class MovieGenreIds {
 
   Map getGenres() {

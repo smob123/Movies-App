@@ -19,18 +19,21 @@ class CastWidgetState extends State<CastWidget> {
     _getMovieCast();
   }
 
+  //gets the movie's cast from the API
   Future _getMovieCast() async {
     List castData = await DataFetch().getMoviesCast(widget.movieId);
     List<Widget> c = new List<Widget>();
 
     for (int i = 0; i < castData.length; i++) {
+      //get the image of the cast member
       var castImage = castData[i]['profile_path'];
 
+      //add a widget for each cast member containing the person's image, and name
       c.add(Container(
           alignment: Alignment.topLeft,
           padding: EdgeInsets.only(right: 20.0),
           child: Column(children: [
-            Container(
+            Container( //container for the image
                 alignment: Alignment.center,
                 height: 150.0,
                 child: castImage != null
@@ -40,7 +43,7 @@ class CastWidgetState extends State<CastWidget> {
                     : Image.asset(
                         'assets/images/clap_board.png',
                       )),
-            Padding(
+            Padding( //contains the cast member's name
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text(
               castData[i]['name'],
@@ -61,11 +64,11 @@ class CastWidgetState extends State<CastWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              Text( //the section's header
                 'Cast',
                 style: Theme.of(context).textTheme.headline,
               ),
-              Container(
+              Container( //container for the list of cast members
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.only(left: 5.0),
                   height: MediaQuery.of(context).size.height / 3,

@@ -15,15 +15,17 @@ class MovieTypesList extends StatefulWidget {
 }
 
 class _MovieTypesListState extends State<MovieTypesList> {
-  List<ListItem> _movieList = [];
+  List<ListItem> _movieList = []; //stores all the fetched movies in a list of widgets
   bool _loading = true;
 
   @override
   void initState() {
     super.initState();
+    //check if the movies were previously fetched
     widget.moviesList != null ? _addMovies() : _getMoviesFromUrl();
   }
 
+  //adds fetched movies to the widget list
   _addMovies() async {
     widget.moviesList.forEach((item) {
       _movieList.add(ListItem(movieData: item));
@@ -34,16 +36,21 @@ class _MovieTypesListState extends State<MovieTypesList> {
     });
   }
 
+  //makes an API request to fetch movies
   _getMoviesFromUrl() async {
+    //make the api request
     List movieList = await widget.fetchMoviesUrl;
 
+    //base url for posters, and background images with a given size
     final String posterBaseUrl = 'https://image.tmdb.org/t/p/w500';
     final String backgroundBaseUrl = 'https://image.tmdb.org/t/p/original';
 
     for (int i = 0; i < movieList.length; i++) {
+      //create a unique id for each poster's hero tag
       var uuid = Uuid();
       String heroTag = 'dash ${uuid.v4().toString()}';
 
+      //format, and store the data that was fetched from the API
       String movieId = movieList[i]['id'].toString();
       String backgroundPath = movieList[i]['backdrop_path'];
       String background = '$backgroundBaseUrl$backgroundPath';
@@ -54,6 +61,7 @@ class _MovieTypesListState extends State<MovieTypesList> {
       String rating = movieList[i]['vote_average'].toString();
       List genreIds = movieList[i]['genre_ids'];
 
+      //store it in a map
       Map movieData = {
         'hero tag': heroTag,
         'movieId': movieId,
@@ -65,7 +73,9 @@ class _MovieTypesListState extends State<MovieTypesList> {
         'genre ids': genreIds
       };
 
+      //if none of the passed values is null
       if (!movieData.containsValue(null)) {
+        //add the data into a widget
         _movieList.add(ListItem(
           movieData: movieData,
         ));
@@ -81,7 +91,7 @@ class _MovieTypesListState extends State<MovieTypesList> {
   build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('${widget.movieTypes}'),
+          title: Text('${widget.movieTypes}'), //the genre, or section of the movies in the list
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),

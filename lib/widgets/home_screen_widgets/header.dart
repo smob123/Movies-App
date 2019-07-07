@@ -1,3 +1,9 @@
+/*
+* this is the main screen's header
+* It's responsible for navigating to the bookmarks screen, search screen, and the settings screen
+* It also suggests a random trending movie
+ */
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -13,33 +19,38 @@ class Header extends StatefulWidget {
 }
 
 class HeaderState extends State<Header> {
-  List _topMovieData;
-  bool _loading = true;
-  Map _movieData;
+  List _topMoviesData; //list of the top trending movies fetched from the api
+  bool _loading = true; //checks if data has been fetched from api
+  Map _movieData; //all movie related data that will be displayed on the header,
+  // and the movie details screen when the header is clicked
 
   void initState() {
     super.initState();
-    _getMovieBackground();
+    _getTrendingMovie();
   }
 
-  _getMovieBackground() async {
-    _topMovieData = await DataFetch().getTrendingMovies();
+  /*fetches all trending movies, and picks a random one to be displayed on the header*/
+  _getTrendingMovie() async {
+    _topMoviesData = await DataFetch()
+        .getTrendingMovies(); //fetch trending movie from the api
 
     var random = new Random();
-    int index = random.nextInt(4);
+    int index = random.nextInt(5); //pick one of the top five trending movies
 
-    String movieId = _topMovieData[index]['id'].toString();
-    String title = _topMovieData[index]['title'];
-    String desc = _topMovieData[index]['overview'];
+    /*get all the movie's required data*/
+    String movieId = _topMoviesData[index]['id'].toString();
+    String title = _topMoviesData[index]['title'];
+    String desc = _topMoviesData[index]['overview'];
     final String backgroundBaseUrl = 'https://image.tmdb.org/t/p/original';
     final String posterBaseUrl = 'https://image.tmdb.org/t/p/w500';
     final String movieBackgroundPath =
-        backgroundBaseUrl + _topMovieData[index]['backdrop_path'];
+        backgroundBaseUrl + _topMoviesData[index]['backdrop_path'];
     String moviePosterPath =
-        posterBaseUrl + _topMovieData[index]['poster_path'];
-    String rating = _topMovieData[index]['vote_average'].toString();
-    List genreIds = _topMovieData[index]['genre_ids'];
+        posterBaseUrl + _topMoviesData[index]['poster_path'];
+    String rating = _topMoviesData[index]['vote_average'].toString();
+    List genreIds = _topMoviesData[index]['genre_ids'];
 
+    //store the data to display it
     _movieData = {
       'movieId': movieId,
       'title': title,
@@ -61,9 +72,11 @@ class HeaderState extends State<Header> {
         margin: EdgeInsets.only(top: 25.0),
         child: Column(children: [
           Row(
+            //top bar
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               GestureDetector(
+                  //button to bookmarked movies screen
                   onTap: (() {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Bookmarks()));
@@ -77,19 +90,24 @@ class HeaderState extends State<Header> {
                     ),
                   )),
               Container(
+                //search bar
                 width: MediaQuery.of(context).size.width / 1.6,
                 child: TextField(
                   style: Theme.of(context).textTheme.title,
                   decoration: InputDecoration(
+                    //search bar's appearance
                     hintStyle: TextStyle(color: Colors.white54),
                     hintText: 'Search Movies...',
                     contentPadding: EdgeInsets.all(10.0),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(50.0)), //round borders
                     ),
                   ),
                   onSubmitted: ((e) {
+                    //when the user submits their search term
                     Navigator.push(
+                        //navigate to the search screen
                         context,
                         MaterialPageRoute(
                             builder: (context) => SearchScreen(
@@ -99,6 +117,7 @@ class HeaderState extends State<Header> {
                 ),
               ),
               GestureDetector(
+                  //button to navigate to the settings screen
                   onTap: (() {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Settings()));
@@ -113,10 +132,13 @@ class HeaderState extends State<Header> {
                   ))
             ],
           ),
-          _loading
-              ? Container()
+          _loading //if the widget is loading
+              ? Container() //display an empty container
               : GestureDetector(
-                  onTap: (() {
+                  //otherwise display a random trending movie
+                  onTap:
+                      ( //when clicked navigate to move details screen to display the movie's info
+                          () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -132,13 +154,19 @@ class HeaderState extends State<Header> {
                       height: MediaQuery.of(context).size.height / 3,
                       decoration: BoxDecoration(
                           image: DecorationImage(
+                              //add the movie's background image as the container's decoration image
                               image: NetworkImage(_movieData['background url']),
                               fit: BoxFit.fill)),
                       child: Container(
+                        //text container to display the movie's name
                         alignment: Alignment.topLeft,
+                        //align the text to the left of the container
                         padding: EdgeInsets.all(10.0),
+                        //add some padding to the text
                         color: Colors.black54,
+                        //make the container's background color semi-transparent black
                         child: Text(
+                          //the movie's title
                           _movieData['title'],
                           style: TextStyle(fontSize: 25.0),
                         ),

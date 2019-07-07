@@ -9,8 +9,8 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
+    return GestureDetector( //make the item clickable
+        onTap: () { //navigate to the details screen on tap
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -21,19 +21,18 @@ class ListItem extends StatelessWidget {
         child: Container(
             height: 350.0,
             decoration: BoxDecoration(
-                image: DecorationImage(
+                image: DecorationImage( //background image
               image: NetworkImage(movieData['background url']),
-              //card background image
               fit: BoxFit.fill,
             )),
-            child: Container(
-              decoration: BoxDecoration(color: Colors.black38),
+            child: Container( //container for the movie's poster, and general details
+              decoration: BoxDecoration(color: Colors.black38), //overlay over the background image
               padding: EdgeInsets.only(bottom: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Container(
+                  Container( //container for the poster
                     padding: EdgeInsets.only(left: 5.0),
                     alignment: Alignment.bottomLeft,
                     width: MediaQuery.of(context).size.width / 2,
@@ -44,7 +43,7 @@ class ListItem extends StatelessWidget {
                           width: 150.0,
                         )),
                   ),
-                  Container(
+                  Container( //container for movie's general information
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(bottom: 50.0, right: 5.0),
                     width: MediaQuery.of(context).size.width / 2,
@@ -52,12 +51,12 @@ class ListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Text(
+                        Text( //the movie's title
                           movieData['title'],
                           style: Theme.of(context).textTheme.headline,
                           textAlign: TextAlign.center,
                         ),
-                        Padding(
+                        Padding( //the movie's rating
                           padding: EdgeInsets.only(top: 5.0),
                           child: Text(
                             movieData['rating'] + ' / 10',

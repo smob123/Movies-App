@@ -28,7 +28,10 @@ class _SearchScreenState extends State<SearchScreen> {
     _initializeControllers();
   }
 
+
   _initializeControllers() {
+    //initialize the GridView's scroll controller to make sure that the list fetches more movies once
+    //the user scrolls to the end of the GridView
     _controller = new ScrollController()
       ..addListener(() {
         if (_controller.offset ==
@@ -38,8 +41,10 @@ class _SearchScreenState extends State<SearchScreen> {
         }
       });
 
+    //sets the text on the TextField to be the search term
     _textEditingController = new TextEditingController(text: widget.searchTerm);
 
+    //search for movies on the API
     _newSearch(widget.searchTerm);
   }
 
@@ -48,22 +53,30 @@ class _SearchScreenState extends State<SearchScreen> {
       _loading = true;
     });
 
+    //reset all values
     _posterList.clear();
     apiPageNumber = 1;
+    //set the new search term
     searchTerm = term;
     _searchForMovies(searchTerm);
-    try {
+
+    try { //move to the scroller to the top of the GridView
       _controller.jumpTo(0.0);
     } catch (e) {}
   }
 
   Future _searchForMovies(String term) async {
+    //get the relevant movies from the API
     List searchedMovieList =
         await DataFetch().searchForMovies(term, apiPageNumber);
 
+    //if the fetching fails
     if (searchedMovieList == null) {
+      //exit the method
       return;
     } else if (searchedMovieList.length < 1) {
+      //otherwise if searching is successful, but no movies were returned
+      //set the result widget to a text widget to display an error
       _posterList.add(Text('No movies found'));
       _searchResultsWidget = _posterList[0];
       setState(() {
@@ -73,13 +86,17 @@ class _SearchScreenState extends State<SearchScreen> {
       return;
     }
 
+    //the base urls for images on the API
     final String posterBaseUrl = 'https://image.tmdb.org/t/p/w500';
     final String backgroundBaseUrl = 'https://image.tmdb.org/t/p/original';
 
     for (int i = 0; i < searchedMovieList.length; i++) {
+      //create a unique ID for eah poster
       var uuid = Uuid();
+      //set the hero tag
       String heroTag = 'dash ${uuid.v4().toString()}';
 
+      //format, and store the data
       String movieId = searchedMovieList[i]['id'].toString();
       String backgroundPath = searchedMovieList[i]['backdrop_path'];
       String background = '$backgroundBaseUrl$backgroundPath';
@@ -90,6 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
       String rating = searchedMovieList[i]['vote_average'].toString();
       List genreIds = searchedMovieList[i]['genre_ids'];
 
+      //add the data to a map variable
       Map movieData = {
         'hero tag': heroTag,
         'movieId': movieId,
@@ -101,13 +119,16 @@ class _SearchScreenState extends State<SearchScreen> {
         'genre ids': genreIds
       };
 
+      //if the movie has a poster
       if (!movieData['poster'].toString().contains('null')) {
+        //add it to the movies list
         _addMovie(movieData, i + _posterList.length);
       }
     }
   }
 
   _addMovie(Map movieData, int heroTag) {
+    //add the movie data into a widget
     _posterList.add(Container(
         padding: EdgeInsets.all(5.0),
         child: GestureDetector(
@@ -126,6 +147,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   fit: BoxFit.fill,
                 )))));
 
+    //add that widget to the GridView
     _searchResultsWidget = GridView.extent(
         controller: _controller,
         childAspectRatio: MediaQuery.of(context).size.width /
@@ -156,10 +178,10 @@ class _SearchScreenState extends State<SearchScreen> {
           elevation: 0.0,
         ),
         body: SafeArea(
-            child: SingleChildScrollView(
+            child: SingleChildScrollView( //make the GridView scrollable
           child: Column(
             children: <Widget>[
-              Container(
+              Container( //container for the search box
                   margin: EdgeInsets.only(bottom: 5.0, top: 10.0),
                   width: MediaQuery.of(context).size.width / 1.1,
                   height: MediaQuery.of(context).size.height / 15,
@@ -180,7 +202,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ? LoadingWidget(
                       color: Colors.white70,
                     )
-                  : ConstrainedBox(
+                  : ConstrainedBox( //container for the search results
                       constraints: BoxConstraints(
                           maxHeight: MediaQuery.of(context).size.height / 1.13,
                           maxWidth: MediaQuery.of(context).size.width),

@@ -18,7 +18,7 @@ class MovieDetailsState extends State<MovieDetails> {
   build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('${widget.movieData['title']}'),
+          title: Text('${widget.movieData['title']}'), //the movie's title
           backgroundColor: Colors.transparent,
           elevation: 0.0,
         ),
@@ -27,7 +27,8 @@ class MovieDetailsState extends State<MovieDetails> {
                 scrollDirection: Axis.vertical,
                 padding: EdgeInsets.all(0.0),
                 children: [
-              Column(children: [
+              Column(//add the screen's widget in a column
+                  children: [
                 Header(
                   title: widget.movieData['title'],
                   genres: widget.movieData['genre ids'],
@@ -39,6 +40,7 @@ class MovieDetailsState extends State<MovieDetails> {
                   ),
                 ),
                 Padding(
+                    //a divider between sections
                     padding: EdgeInsets.only(
                         top: 20.0, bottom: 20.0, left: 50.0, right: 50.0),
                     child: Divider(
@@ -46,10 +48,10 @@ class MovieDetailsState extends State<MovieDetails> {
                       indent: 0.0,
                       color: Colors.white70,
                     )),
-                MovieScreenshotsWidget(
+                MovieScreenshotsWidget( //trailer, and screenshot list
                   movieId: widget.movieData['movieId'],
                 ),
-                Padding(
+                Padding( //divider between sections
                     padding: EdgeInsets.only(
                         top: 20.0, bottom: 20.0, left: 50.0, right: 50.0),
                     child: Divider(
@@ -57,7 +59,7 @@ class MovieDetailsState extends State<MovieDetails> {
                       indent: 0.0,
                       color: Colors.white70,
                     )),
-                CastWidget(
+                CastWidget( //list of cast members
                   movieId: widget.movieData['movieId'],
                 )
               ])

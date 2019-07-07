@@ -5,16 +5,17 @@ import '../../config/movieGenreIds.dart';
 class Header extends StatefulWidget {
   Header({this.title, this.backgroundUrl, this.genres});
 
-  final String title;
-  final String backgroundUrl;
-  final List genres;
+  final String title; //the title of the movie
+  final String backgroundUrl; //the header's background image
+  final List genres; //the movie's genres
 
   HeaderState createState() => HeaderState();
 }
 
 class HeaderState extends State<Header> {
-  List<Widget> _genreWidgets = new List<Widget>();
-  final Map _allMovieGenres = MovieGenreIds().getGenres();
+  List<Widget> _genreWidgets =
+      new List<Widget>(); //stores genres in a list of small widgets
+  final Map _allMovieGenres = MovieGenreIds().getGenres(); //gets genres by ID
 
   @override
   initState() {
@@ -26,24 +27,27 @@ class HeaderState extends State<Header> {
     List<Widget> genreItems = new List<Widget>();
 
     for (int i = 0; i < widget.genres.length; i++) {
+      //get the current genre by id
       String currentGenre = _allMovieGenres[widget.genres[i].toString()];
 
-      genreItems.add(Container(
-          margin:
-              EdgeInsets.only(left: 10.0, right: 5.0, top: 10.0, bottom: 10.0),
-          padding:
-              EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
-          decoration: BoxDecoration(
-              color: Colors.black54,
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              border: Border.all(color: Colors.white)),
-          child: Text(
-            currentGenre,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 15.0,
-            ),
-          )));
+      genreItems.add(
+          //wrapper around the text; ie, the current genre's name
+          Container(
+              margin: EdgeInsets.only(
+                  left: 10.0, right: 5.0, top: 10.0, bottom: 10.0),
+              padding: EdgeInsets.only(
+                  top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+              decoration: BoxDecoration(
+                  color: Colors.black54, //add a black background
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  border: Border.all(color: Colors.white)),
+              child: Text(
+                currentGenre,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                ),
+              )));
     }
 
     setState(() {
@@ -54,24 +58,26 @@ class HeaderState extends State<Header> {
   @override
   build(BuildContext context) {
     return Container(
-      alignment: Alignment.topLeft,
       height: MediaQuery.of(context).size.height / 2,
       decoration: BoxDecoration(
-          image: DecorationImage(
+          image:
+              //background image
+              DecorationImage(
         image: NetworkImage(widget.backgroundUrl),
         fit: BoxFit.fill,
       )),
-      child: Container(
+      child: Container( //container for the movie's title, and genres (displayed on top of the background image)
           alignment: Alignment.bottomLeft,
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Colors.black26),
+          decoration: BoxDecoration(color: Colors.black26), //overlay to make text readable
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Row(
-                  children: <Widget>[
-                    ConstrainedBox(
+                Container( //container for the movie's title
+                  alignment: Alignment.topLeft,
+                  child:
+                    ConstrainedBox( //make sure that the text does not go off screen
                       child: Padding(
                           padding: EdgeInsets.only(left: 5.0, right: 5.0),
                           child: Text(
@@ -79,12 +85,11 @@ class HeaderState extends State<Header> {
                             style:
                                 TextStyle(fontSize: 30.0, color: Colors.white),
                           )),
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width / 1.3),
+                      constraints: BoxConstraints( //the text can only take up to 70% of the screen's width
+                          maxWidth: MediaQuery.of(context).size.width * 0.7),
                     ),
-                  ],
                 ),
-                ConstrainedBox(
+                ConstrainedBox( //make sure that the genres' list constrains do not go off screen
                     constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width,
                         maxHeight: 50.0),

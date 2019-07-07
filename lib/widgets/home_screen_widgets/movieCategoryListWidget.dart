@@ -1,3 +1,8 @@
+/*
+* This is a widget that displays highlighted movies
+* It only shows up to 10 movies, and the user can click to see more highlighted movies
+*/
+
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -8,15 +13,16 @@ import '../../widgets/general_widgets/loadingWidget.dart';
 class MovieCategoryList extends StatefulWidget {
   MovieCategoryList({this.category, this.moviesList});
 
-  final String category;
-  var moviesList;
+  final String category; //a header to display what the movies are featured for
+  var moviesList; //the method that returns the desired movies list
 
   MovieCategoryListState createState() => MovieCategoryListState();
 }
 
 class MovieCategoryListState extends State<MovieCategoryList> {
-  List<Map> _movieData = [];
-  bool _loading = true;
+  List<Map> _movieData =
+      []; //stores all the movies that are fetched from the api
+  bool _loading = true; //waits for the data fetching to finish
 
   void initState() {
     super.initState();
@@ -24,14 +30,19 @@ class MovieCategoryListState extends State<MovieCategoryList> {
   }
 
   Future _getMoviesList() async {
-    List mList = await widget.moviesList;
-    final String posterBaseUrl = 'https://image.tmdb.org/t/p/w500';
-    final String backgroundBaseUrl = 'https://image.tmdb.org/t/p/original';
+    List mList = await widget
+        .moviesList; //make the api call, and store the returned movie data
+    final String posterBaseUrl =
+        'https://image.tmdb.org/t/p/w500'; //base image url from the TMDB that returns images with 500px width
+    final String backgroundBaseUrl =
+        'https://image.tmdb.org/t/p/original'; //base image url from TMDB that returns images with their original size
 
     mList.forEach((item) {
-      var uuid = Uuid();
-      String heroTag = 'dash ${uuid.v4().toString()}';
+      var uuid = Uuid(); //create a random id to add to the hero widget's tag
+      String heroTag =
+          'dash ${uuid.v4().toString()}'; //set the hero widget's tag
 
+      /*store all the required data from the api*/
       String movieId = item['id'].toString();
       String backgroundPath = item['backdrop_path'];
       String background = '$backgroundBaseUrl$backgroundPath';
@@ -53,21 +64,23 @@ class MovieCategoryListState extends State<MovieCategoryList> {
         'genre ids': genreIds
       };
 
-      bool dataIsValid = true;
+      bool dataIsValid = true; //checks if the data fetched from api is valid
 
       currentMovieData.forEach((key, value) {
-        if(value.toString().contains('null')) {
-          dataIsValid = false;
+        //if any of the value is null
+        if (value.toString().contains('null')) {
+          dataIsValid = false; //the data is not valid
         }
       });
 
+      //only if the data is valid
       if (dataIsValid) {
-        _movieData.add(currentMovieData);
+        _movieData.add(currentMovieData); //add it to the movie list
       }
     });
 
     setState(() {
-      _loading = false;
+      _loading = false; //exit the loading state, and display the widget
     });
   }
 
@@ -78,16 +91,21 @@ class MovieCategoryListState extends State<MovieCategoryList> {
             EdgeInsets.only(top: 10.0, bottom: 20.0, left: 10.0, right: 10.0),
         child: Column(children: [
           Container(
+              //contains the header, and the "see more" button
               padding: EdgeInsets.only(bottom: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
+                    //the header
                     widget.category,
                     style: Theme.of(context).textTheme.headline,
                   ),
                   GestureDetector(
-                      onTap: (() {
+                      //the "see more" button
+                      onTap:
+                          ( //when tapped navigate to the movie type list screen
+                              () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -98,22 +116,29 @@ class MovieCategoryListState extends State<MovieCategoryList> {
                       }),
                       child: Text(
                         'See more',
-                        style: TextStyle(),
                       ))
                 ],
               )),
           Container(
+              //the list of movie posters
               height: 250.0,
-              child: _loading
+              child: _loading //if loading
                   ? LoadingWidget(
+                      //display the loading wiget
                       color: Colors.white70,
                     )
-                  : ListView.builder(
+                  : //otherwise display the fetched movies list
+                  ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      //make it scroll horizontally
                       itemCount: (_movieData.length / 2).round(),
+                      //only show half of the fetched movies (at most 10)
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                            onTap: (() {
+                            //wrap each movie poster in a gesture detector widget
+                            onTap:
+                                ( //when tapped navigate to the movie details screen
+                                    () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
