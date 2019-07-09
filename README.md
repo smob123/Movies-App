@@ -4,7 +4,7 @@ This is a flutter app, that displays trending movies and allows users to search 
 
 # Screenshots
 
-<img src="https://user-images.githubusercontent.com/26127333/52352352-7e30a680-2a3d-11e9-9b27-9edc168e9e06.PNG" width="35%" height="50%"/>
-<img src="https://user-images.githubusercontent.com/26127333/52357619-8261c180-2a47-11e9-8065-7e497cadb2f7.PNG" width="35%" height="50%"/>
-<img src="https://user-images.githubusercontent.com/26127333/52357628-8857a280-2a47-11e9-925f-90605961bc0d.PNG" width="35%" height="50%"/>
-<img src="https://user-images.githubusercontent.com/26127333/52352368-838df100-2a3d-11e9-9185-3c8df9d57ca9.PNG" width="35%" height="50%"/>
+<img src="https://user-images.githubusercontent.com/26127333/60794257-7a0bdf00-a1bd-11e9-87e1-eebb5e14d71e.png" width="35%" height="50%"/>
+<img src="https://user-images.githubusercontent.com/26127333/60794104-21d4dd00-a1bd-11e9-8578-5b0c9071f4ee.png" width="35%" height="50%"/>
+<img src="https://user-images.githubusercontent.com/26127333/60794027-f81bb600-a1bc-11e9-9449-f4fa0d2302c7.gif" width="35%" height="50%"/>
+<img src="https://user-images.githubusercontent.com/26127333/60794196-58aaf300-a1bd-11e9-8b24-ed36c1e0abd4.png" width="35%" height="50%"/>
