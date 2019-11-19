@@ -2,6 +2,13 @@
 
 This is a flutter app, that displays trending movies and allows users to search for information about their favourite films
 
+# How to Run
+- Run a virtual device, or connect a physical phone to your PC
+- Type the following into the command line
+```
+flutter run
+```
+
 # Screenshots
 
 <img src="https://user-images.githubusercontent.com/26127333/60794257-7a0bdf00-a1bd-11e9-87e1-eebb5e14d71e.png" width="35%" height="50%"/>
